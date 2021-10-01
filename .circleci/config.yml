@@ -1,0 +1,18 @@
+version: 2.1
+orbs:
+  shiftleft: shiftleft/shiftleft@1.0.6
+jobs:
+  build:
+    docker:
+      - image: amazoncorretto:8
+    steps:
+      - checkout
+      - run: yum -y update && yum -y install sudo curl which tar mvn
+      - run: curl https://www.shiftleft.io/
+      - shiftleft/analyze:
+          app: shiftleft-js-demo
+          language: javascript
+workflows:
+  workflow:
+    jobs:
+      - build
